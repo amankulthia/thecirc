@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="THE CIRC">
+<meta property="og:description" content="A private social network for real life. By invitation.">
+<title>THE CIRC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="THE CIRC is a private social network for real life. Invite-only. Built by its members. Delhi and Bombay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@1&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Apple cadence (one idea per band, centred, generous air) dressed in Soho House materials (Caslon, parchment, a printed house card). Single committed light look; the oxblood dot is the only colour. */
+:root{
+  --white:#FFFFFF; --gray:#F5F5F7; --parchment:#F3EFE8; --ink:#1D1D1F; --muted:#6E6E73; --line:#D2D2D7; --oxblood:#8A3B33; --night:#0E0D0D; --night-2:#1A1918; --night-fg:#F5F2EC; --night-muted:#A1A1A6;
+  --serif:"Libre Caslon Display","Big Caslon","Iowan Old Style",Georgia,serif;
+  --italic:"Libre Caslon Text","Big Caslon",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Manrope","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--oxblood);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-.015em}
+p{margin:0}
+em{font-family:var(--italic);font-style:italic;letter-spacing:-.02em}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+.center{text-align:center}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.links{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:28px;font-size:18px}
+.link{color:var(--oxblood);font-weight:500}
+.link:hover{text-decoration:underline}
+.link::after{content:" \203A";font-size:1.1em}
+.pill{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--white);font:500 15px var(--sans);padding:12px 22px;border-radius:999px;border:0;cursor:pointer}
+.pill:hover{background:#000}
+.sym{display:block}
+.sym .ring{fill:none;stroke:currentColor;stroke-linecap:round}
+.sym .dot{fill:var(--oxblood)}
+
+/* nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--white)}
+.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:56px}
+.nav nav{display:flex;gap:26px;font-size:13px;color:var(--muted)}
+.nav nav a:hover{color:var(--ink)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .sym{width:24px;height:24px}
+.brand span{font-family:var(--serif);font-size:16px;letter-spacing:.24em;padding-left:.24em}
+.nav .right{display:flex;justify-content:flex-end}
+.nav .pill{padding:8px 15px;font-size:13px}
+@media (max-width:760px){.nav{grid-template-columns:auto 1fr}.nav nav{display:none}.brand{justify-self:start}}
+
+/* hero */
+.hero{padding-block:88px 40px}
+.hero h1{font-size:clamp(52px,9vw,112px);line-height:.98}
+.hero .sub{font-size:clamp(19px,2.2vw,24px);line-height:1.35;color:var(--muted);max-width:30em;margin:26px auto 0;letter-spacing:-.015em}
+.hero-mark{width:min(380px,72vw);margin:64px auto 0;color:var(--ink)}
+.hero-mark .ring{stroke-width:1.3}
+.hero-mark .dot{r:2.6}
+.hero-note{margin-top:28px;font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){
+  .hero-mark .ring{stroke-dasharray:193;stroke-dashoffset:193;animation:draw 1.8s cubic-bezier(.65,0,.35,1) .2s forwards}
+  .hero-mark .dot{opacity:0;transform:translateX(14px);transform-box:fill-box;animation:arrive .9s cubic-bezier(.2,.8,.2,1) 1.7s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes arrive{to{opacity:1;transform:none}}
+}
+
+/* statement */
+.statement{padding-block:110px;background:var(--gray)}
+.statement p{font-family:var(--serif);font-size:clamp(30px,4.4vw,54px);line-height:1.12;max-width:17em;margin:0 auto;color:#A1A1A6}
+.statement p b{font-weight:400;color:var(--ink)}
+
+section{padding-block:120px}
+.sec-head{max-width:760px;margin:0 auto 64px;text-align:center}
+.sec-head h2{font-size:clamp(40px,6vw,72px);line-height:1.02;margin-top:14px}
+.sec-head p{font-size:clamp(18px,2vw,21px);color:var(--muted);margin-top:20px;line-height:1.45}
+@media (max-width:700px){section{padding-block:80px}.statement{padding-block:80px}}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.tile{background:var(--parchment);border-radius:28px;padding:40px 36px 0;display:flex;flex-direction:column;gap:12px;overflow:hidden;min-width:0;min-height:420px}
+.tile.w4{grid-column:span 4}.tile.w2{grid-column:span 2}.tile.w3{grid-column:span 3}
+.tile.dark{background:var(--night);color:var(--night-fg)}
+.tile .kicker{color:var(--oxblood)}
+.tile.dark .kicker{color:#D79A8C}
+.tile h3{font-size:clamp(30px,3.2vw,40px);line-height:1.05}
+.tile p{color:var(--muted);font-size:16px;max-width:26em}
+.tile.dark p{color:var(--night-muted)}
+.tile.w6{grid-column:span 6;min-height:0;padding-bottom:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end}
+.tools-head{display:flex;flex-direction:column;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+.chips span{background:var(--white);border-radius:999px;padding:11px 18px;font-size:15px;font-weight:500}
+.private{background:var(--white);border-top:1px solid var(--line)}
+@media (max-width:900px){.tile.w6{grid-column:auto;grid-template-columns:1fr}.chips{justify-content:flex-start}}
+.art{margin-top:auto;display:flex;justify-content:center;align-items:flex-end;padding-top:28px;min-height:170px}
+@media (max-width:900px){.bento{grid-template-columns:1fr}.tile.w4,.tile.w2,.tile.w3{grid-column:auto}.tile{min-height:0}}
+
+/* art: circles */
+.venn{position:relative;width:300px;max-width:100%;height:180px}
+.venn i{position:absolute;width:150px;height:150px;border-radius:50%;border:1.2px solid var(--ink);top:20px}
+.venn i:nth-child(1){left:20px}.venn i:nth-child(2){left:75px;border-color:var(--oxblood)}.venn i:nth-child(3){left:130px}
+.venn b{position:absolute;left:144px;top:89px;width:12px;height:12px;border-radius:50%;background:var(--oxblood)}
+/* art: guest list */
+.guests{width:100%;max-width:320px;background:var(--white);border-radius:20px 20px 0 0;padding:20px 22px 10px;box-shadow:0 -1px 0 rgba(0,0,0,.04)}
+.guests .h{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:12px}
+.g{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid #EEE;font-size:14px}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--sans);color:#fff;flex:none}
+.a1{background:#6F5A52}.a2{background:#3F4752}.a3{background:#7C6B55}.a4{background:#55605A}.a5{background:#8A3B33}
+.g span:last-child{margin-left:auto;font-size:12px;color:var(--muted)}
+/* art: review */
+.quote{font-family:var(--italic);font-style:italic;font-size:22px;line-height:1.3;color:var(--night-fg);max-width:15em;text-align:left;padding-bottom:44px}
+.quote small{display:block;font:500 13px var(--sans);font-style:normal;color:var(--night-muted);margin-top:16px;letter-spacing:0}
+.quote .st{color:#D79A8C;letter-spacing:3px;font-style:normal;font-size:14px;display:block;margin-bottom:14px}
+/* art: door */
+.door{width:200px;height:170px;border:1.2px solid var(--ink);border-bottom:0;border-radius:100px 100px 0 0;position:relative;display:grid;place-items:center}
+.door span{font:600 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:30px}
+.door b{position:absolute;right:30px;top:96px;width:9px;height:9px;border-radius:50%;background:var(--oxblood)}
+
+/* app band */
+.app{background:var(--night);color:var(--night-fg)}
+.app .sec-head p{color:var(--night-muted)}
+.app .kicker{color:var(--night-muted)}
+.phones{display:flex;justify-content:center;align-items:flex-end;gap:26px;flex-wrap:wrap}
+.phones figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:18px}
+.phones figcaption{font-size:14px;color:var(--night-muted)}
+.phones figure:nth-child(2) .phone{transform:translateY(-28px)}
+@media (max-width:900px){.phones figure:nth-child(2) .phone{transform:none}}
+.phone{width:258px;max-width:100%;aspect-ratio:9/19.3;background:#2A2928;border-radius:46px;padding:9px;box-shadow:inset 0 0 0 1px #3a3937,0 40px 80px -30px rgba(0,0,0,.8)}
+.screen{height:100%;background:var(--white);color:var(--ink);border-radius:38px;overflow:hidden;display:flex;flex-direction:column;font-size:12px;line-height:1.35}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0;font:600 12px var(--sans)}
+.isl{width:84px;height:24px;border-radius:999px;background:#000;margin:-19px auto 0}
+.sc{padding:18px 16px 0;display:flex;flex-direction:column;gap:12px;flex:1;min-height:0}
+.sc h4{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.05;margin:0}
+.lb{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cd{background:var(--gray);border-radius:16px;padding:13px;display:flex;flex-direction:column;gap:5px}
+.cd.k{background:var(--ink);color:var(--white)}
+.cd .t{font-weight:600;font-size:13.5px}
+.cd .s{color:var(--muted);font-size:11.5px}
+.cd.k .s,.cd.k .lb{color:#A1A1A6}
+.rw{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.fc{display:flex}.fc .av{width:22px;height:22px;font-size:8px;margin-left:-6px;border:2px solid var(--ink)}.fc .av:first-child{margin-left:0}
+.cd:not(.k) .fc .av{border-color:var(--gray)}
+.btn-s{font:600 11px var(--sans);background:var(--white);color:var(--ink);padding:6px 12px;border-radius:999px}
+.cd:not(.k) .btn-s{background:var(--ink);color:var(--white)}
+.tb{display:flex;justify-content:space-around;padding:10px 4px 18px;border-top:1px solid #EEE;margin-top:auto;font:500 10px var(--sans);color:#A1A1A6}
+.tb b{color:var(--ink);font-weight:600}
+.ph{height:118px;border-radius:16px;background:radial-gradient(110% 80% at 25% 15%,#9a7461 0,transparent 55%),radial-gradient(80% 80% at 90% 100%,#2b2321 0,transparent 60%),linear-gradient(150deg,#5a4740,#211c1b)}
+.votes{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:4px}
+.votes i{height:5px;border-radius:3px;background:#3A3A3C}.votes i.y{background:var(--white)}
+.app .fine{text-align:center;margin-top:56px;font-size:13px;color:var(--night-muted)}
+
+/* membership */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;position:relative}
+.steps::before{content:"";position:absolute;top:27px;left:16%;right:16%;height:1px;background:var(--line)}
+.step{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;min-width:0}
+.num{width:56px;height:56px;border-radius:50%;border:1px solid var(--ink);background:var(--white);display:grid;place-items:center;font-family:var(--serif);font-size:22px}
+.step:last-child .num{background:var(--ink);color:var(--white)}
+.step h3{font-size:28px;line-height:1.1;margin-top:8px}
+.step p{color:var(--muted);font-size:16px;max-width:19em}
+@media (max-width:800px){.steps{grid-template-columns:1fr;gap:48px}.steps::before{display:none}}
+.lineage{margin:72px auto 0;max-width:680px;text-align:center}
+.lineage p{font-family:var(--serif);font-size:clamp(26px,3.2vw,36px);line-height:1.15}
+.chain{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--muted)}
+.chain span{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-variant-numeric:tabular-nums}
+.chain span:last-child{border-color:var(--ink);color:var(--ink)}
+
+/* card */
+.card-sec{background:var(--gray)}
+.mcard-stage{perspective:1400px;display:flex;justify-content:center;padding-block:10px 30px}
+.mcard{width:min(460px,100%);aspect-ratio:1.586;border-radius:22px;background:linear-gradient(135deg,#232120,#0E0D0D 60%,#1B1918);color:var(--night-fg);padding:30px 32px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 50px 90px -40px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.06);transform:rotateX(14deg) rotateY(-14deg);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.mcard:hover{transform:rotateX(0) rotateY(0)}
+.mcard .top{display:flex;justify-content:space-between;align-items:flex-start}
+.mcard .sym{width:44px;height:44px;color:var(--night-fg)}
+.mcard .sym .ring{stroke-width:4.6}
+.mcard .sym .dot{fill:#D79A8C}
+.mcard .wm{font-family:var(--serif);font-size:14px;letter-spacing:.3em}
+.mcard .nm{font-family:var(--serif);font-size:clamp(22px,4vw,28px)}
+.mcard .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--night-muted);margin-top:6px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.facts{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;margin-top:40px;text-align:center}
+.facts div{max-width:13em}
+.facts b{display:block;font-family:var(--serif);font-weight:400;font-size:24px;margin-bottom:4px}
+.facts span{font-size:15px;color:var(--muted)}
+
+/* house rules */
+.housecard{max-width:720px;margin:0 auto;background:var(--parchment);border-radius:6px;padding:clamp(36px,6vw,72px) clamp(24px,6vw,80px);text-align:center;position:relative;outline:1px solid #D9D1C4;outline-offset:-14px}
+.housecard .sym{width:40px;height:40px;margin:0 auto 18px}
+.housecard .sym .ring{stroke-width:4.6}
+.housecard h2{font-size:clamp(32px,4.4vw,46px);letter-spacing:.06em}
+.housecard ol{list-style:none;margin:36px 0 0;padding:0;display:grid;gap:26px;counter-reset:r}
+.housecard li{counter-increment:r}
+.housecard li h3{font-family:var(--italic);font-style:italic;font-size:22px;letter-spacing:-.01em}
+.housecard li h3::before{content:counter(r,upper-roman) ".  ";font-family:var(--serif);font-style:normal;font-size:15px;color:var(--oxblood);letter-spacing:.1em}
+.housecard li p{color:var(--muted);font-size:15.5px;margin-top:6px;max-width:30em;margin-inline:auto}
+.housecard .sig{margin-top:40px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* invite */
+.invite{background:var(--gray)}
+form{max-width:560px;margin:0 auto;display:grid;gap:14px}
+.field{position:relative}
+.field input,.field select{width:100%;font:400 17px var(--sans);color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px 16px 10px;appearance:none;-webkit-appearance:none}
+.field label{position:absolute;left:17px;top:9px;font-size:12px;color:var(--muted)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--oxblood);box-shadow:0 0 0 3px rgba(138,59,51,.15)}
+.field.sel::after{content:"";position:absolute;right:18px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.two{grid-template-columns:1fr}}
+form .pill{padding:16px;font-size:17px;margin-top:8px}
+form small{text-align:center;color:var(--muted);font-size:13px}
+.done{text-align:center;max-width:520px;margin:0 auto}
+.done .sym{width:72px;height:72px;margin:0 auto 22px}
+.done .sym .ring{stroke-width:3.2}
+.done h3{font-size:40px}
+.done p{color:var(--muted);margin-top:12px}
+
+footer{background:var(--gray);border-top:1px solid var(--line);padding-block:28px 40px;font-size:12px;color:var(--muted);line-height:1.6}
+.fgrid{display:flex;justify-content:space-between;gap:20px 40px;flex-wrap:wrap}
+.fgrid .brand span{color:var(--ink)}
+.fine-print{border-top:1px solid var(--line);margin-top:20px;padding-top:16px;display:flex;justify-content:space-between;gap:10px 30px;flex-wrap:wrap}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <nav aria-label="Primary"><a href="#inside">Inside</a><a href="#app">The App</a><a href="#membership">Membership</a><a href="#rules">House Rules</a></nav>
+    <a class="brand" href="#top" aria-label="THE CIRC home">
+      <svg class="sym" viewBox="0 0 100 100" aria-hidden="true"><path class="ring" d="M79.13 71.80A38 38 0 1 1 79.13 28.20" stroke-width="5.5"/><circle class="dot" cx="86" cy="50" r="5.6"/></svg>
+      <span>THE CIRC</span>
+    </a>
+    <div class="right"><a class="pill" href="#invite">Request an invite</a></div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero center">
+    <p class="kicker">Members only &middot; Delhi &amp; Bombay</p>
+    <h1 style="margin-top:22px">Real life,<br><em>by invitation.</em></h1>
+    <p class="sub">THE CIRC is a members-only network of small communities built around what you love and how you live. Find your people, then meet them in real life.</p>
+    <div class="links"><a class="link" href="#invite">Request an invite</a><a class="link" href="#inside">See what's inside</a></div>
+    <svg class="sym hero-mark" viewBox="0 0 100 100" role="img" aria-label="THE CIRC symbol: an open circle with a member at the door"><path class="ring" d="M79.13 71.80A38 38 0 1 1 79.13 28.20"/><circle class="dot" cx="86" cy="50" r="2.6"/></svg>
+    <p class="hero-note">The circle stays open by one place. Someone has to bring you through it.</p>
+  </div>
+
+  <div class="statement center">
+    <div class="wrap">
+      <p><b>After college, the systems that found us our people disappear.</b> Social media kept us connected and left us alone. <b>THE CIRC rebuilds the room.</b></p>
+    </div>
+  </div>
+
+  <section id="inside">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">Inside THE CIRC</p>
+        <h2>A social network that ends at a table.</h2>
+        <p>Co-founders, close friends, the person you end up with. Too much of it is left to chance. THE CIRC gives it a place to happen, again and again.</p>
+      </div>
+      <div class="bento">
+        <article class="tile w4">
+          <span class="kicker">Circles</span>
+          <h3>Start your own circle.</h3>
+          <p>Build one around a supper, a sport, a craft or a city. Each circle writes its own rules and votes on who joins.</p>
+          <div class="art"><div class="venn" aria-hidden="true"><i></i><i></i><i></i><b></b></div></div>
+        </article>
+        <article class="tile w2">
+          <span class="kicker">Experiences</span>
+          <h3>See who's going.</h3>
+          <p>Dinners, runs, workshops, retreats. Check the guest list before you say yes.</p>
+          <div class="art"><div class="guests" aria-hidden="true">
+            <div class="h"><span>Supper, Thursday</span><span>8 of 12</span></div>
+            <div class="g"><span class="av a1">MK</span><span>Meera</span><span>Host</span></div>
+            <div class="g"><span class="av a2">AR</span><span>Arjun</span><span>Going</span></div>
+            <div class="g"><span class="av a5">TS</span><span>Tara</span><span>Going</span></div>
+          </div></div>
+        </article>
+        <article class="tile w3 dark">
+          <span class="kicker">Recommendations</span>
+          <h3>Trust a name, not a rating.</h3>
+          <p>Reviews from people you know. A place earns its way in by being recommended by members.</p>
+          <div class="art" style="justify-content:flex-start"><p class="quote"><span class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</span>Ask for the corner by the fig tree. Order whatever she's having.<small>Arjun R. &middot; example review</small></p></div>
+        </article>
+        <article class="tile w3">
+          <span class="kicker">Access</span>
+          <h3>Be expected.</h3>
+          <p>Partner venues know you're coming: priority tables, members' rates and the occasional quiet upgrade.</p>
+          <div class="art"><div class="door" aria-hidden="true"><span>Members</span><b></b></div></div>
+        </article>
+        <article class="tile w6">
+          <div class="tools-head"><span class="kicker">Between gatherings</span><h3>Stay close until the next one.</h3><p>Every community gets its own private space on the app, so the conversation keeps going after the table clears.</p></div>
+          <div class="chips"><span>Group chats</span><span>Audio &amp; video rooms</span><span>Forums</span><span>Event calendar</span><span>Member directory</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="app" class="app">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">The App</p>
+        <h2>Quiet by design.</h2>
+        <p>One place for your circles, your plans, the places you trust and the people you've met. No follower counts. No public likes. Nothing to scroll.</p>
+      </div>
+      <div class="phones">
+        <figure>
+          <div class="phone"><div class="screen">
+            <div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="isl"></div>
+            <div class="sc">
+              <span class="lb">Circle</span>
+              <h4>Supper Society</h4>
+              <div class="fc"><span class="av a1">MK</span><span class="av a2">AR</span><span class="av a3">TS</span><span class="av a4">+9</span></div>
+              <div class="cd"><span class="lb">Next gathering</span><span class="t">Thursday, 8:30 pm</span><span class="s">Twelve seats &middot; Mehrauli</span></div>
+              <div class="cd k"><span class="lb">Request to join</span><span class="t">Rhea S.</span><span class="s">Invited by No. 0061</span><div class="votes"><i class="y"></i><i class="y"></i><i class="y"></i><i class="y"></i><i class="y"></i><i></i><i></i><i></i><i></i></div><div class="rw"><span class="s">5 of 9 voted</span><span class="btn-s">Accept</span></div></div>
+            </div>
+            <div class="tb"><span>Home</span><b>Circles</b><span>Places</span><span>Me</span></div>
+          </div></div>
+          <figcaption>Circles decide together</figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><div class="screen">
+            <div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="isl"></div>
+            <div class="sc">
+              <span class="lb">Thursday</span>
+              <h4>Good evening, Meera.</h4>
+              <div class="cd k"><span class="lb">Invited to you</span><span class="t">Supper Society</span><span class="s">Five people you know are going.</span><div class="rw"><div class="fc"><span class="av a1">AK</span><span class="av a2">RS</span><span class="av a5">NV</span></div><span class="btn-s">Say yes</span></div></div>
+              <span class="lb">This week</span>
+              <div class="cd"><div class="rw"><span class="t">Padel at Seven</span><span class="s">Sat</span></div><span class="s">3 places left in your circle</span></div>
+              <div class="cd"><div class="rw"><span class="t">The Sunday Loop</span><span class="s">Sun</span></div><span class="s">6:30 am &middot; Lodhi Garden</span></div>
+            </div>
+            <div class="tb"><b>Home</b><span>Circles</span><span>Places</span><span>Me</span></div>
+          </div></div>
+          <figcaption>Your week, in one view</figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><div class="screen">
+            <div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="isl"></div>
+            <div class="sc">
+              <div class="ph" role="img" aria-label="Venue photograph placeholder"></div>
+              <h4 style="font-size:22px">A courtyard bar, Hauz Khas</h4>
+              <span class="s" style="color:var(--muted)">Recommended by 14 members</span>
+              <div class="cd"><span class="lb">For members</span><span class="t">Priority table, Thursday to Sunday</span></div>
+              <div class="cd"><div class="rw"><span class="t">Arjun R.</span><span style="color:var(--oxblood);letter-spacing:2px">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div><span class="s">Ask for the corner by the fig tree.</span></div>
+            </div>
+            <div class="tb"><span>Home</span><span>Circles</span><b>Places</b><span>Me</span></div>
+          </div></div>
+          <figcaption>Places your friends vouch for</figcaption>
+        </figure>
+      </div>
+      <p class="fine">THE CIRC app is in development. Screens are illustrative; names and places are examples.<br>Coming to iPhone and Android.</p>
+    </div>
+  </section>
+
+  <section id="membership">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">Membership</p>
+        <h2>Nobody applies cold.</h2>
+        <p>You arrive because someone vouched for you. You stay because the circle said yes.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="num">I</span><h3>A member puts your name forward.</h3><p>Every new member is brought in by an existing one.</p></div>
+        <div class="step"><span class="num">II</span><h3>The circle decides.</h3><p>Members of the circle you're joining review the request, then accept or pass.</p></div>
+        <div class="step"><span class="num">III</span><h3>You're in, with four invitations.</h3><p>A member number, a card, and four invitations of your own.</p></div>
+      </div>
+      <div class="lineage">
+        <p>Every member can see who brought them in. <em>The lineage is the credential.</em></p>
+        <div class="chain" aria-label="Example invitation lineage"><span>Founding circle</span>&rarr;<span>No. 0009</span>&rarr;<span>No. 0061</span>&rarr;<span>You</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="statement center private">
+    <div class="wrap">
+      <span class="kicker" style="display:block;margin-bottom:22px">Private by design</span>
+      <p><b>A private room for people who are usually on display.</b> No public profiles. No screenshots. No follower counts. <b>Just you, and people who chose you.</b></p>
+    </div>
+  </div>
+
+  <section class="card-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">The Card</p>
+        <h2>Numbered. Never for sale.</h2>
+      </div>
+      <div class="mcard-stage">
+        <div class="mcard" aria-label="Example membership card">
+          <div class="top">
+            <svg class="sym" viewBox="0 0 100 100" aria-hidden="true"><path class="ring" d="M79.13 71.80A38 38 0 1 1 79.13 28.20"/><circle class="dot" cx="86" cy="50" r="5.06"/></svg>
+            <span class="wm">THE CIRC</span>
+          </div>
+          <div>
+            <div class="nm">Meera Kapoor</div>
+            <div class="meta"><span>Member No. 0142</span><span>Delhi</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="facts">
+        <div><b>One card</b><span>for the door, in the app and in your wallet.</span></div>
+        <div><b>Four invitations</b><span>yours to give, and visible to everyone.</span></div>
+        <div><b>Quietly earned</b><span>a status symbol that says taste and belonging, not spend.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="wrap">
+      <div class="housecard">
+        <svg class="sym" viewBox="0 0 100 100" aria-hidden="true"><path class="ring" d="M79.13 71.80A38 38 0 1 1 79.13 28.20"/><circle class="dot" cx="86" cy="50" r="5.06"/></svg>
+        <h2>HOUSE RULES</h2>
+        <ol>
+          <li><h3>Real names, real faces.</h3><p>Everyone here is who they say they are. No handles.</p></li>
+          <li><h3>The circle stays in the circle.</h3><p>What's said at the table isn't posted, screenshotted or repeated.</p></li>
+          <li><h3>Recommend as if your name is on it.</h3><p>Because it is. Only send members where you'd send a friend.</p></li>
+          <li><h3>An RSVP is a promise.</h3><p>Someone else wanted your seat. Show up, or release it early.</p></li>
+          <li><h3>Invite with care.</h3><p>Bring people who make the room better. Your name travels with them.</p></li>
+        </ol>
+        <p class="sig">THE CIRC &middot; MMXXVI</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="invite" class="invite">
+    <div class="wrap">
+      <div id="ask">
+        <div class="sec-head">
+          <p class="kicker">The Door</p>
+          <h2>Request an invite.</h2>
+          <p>THE CIRC opens first in Delhi and Bombay. If a member is already vouching for you, name them. It's the fastest way in.</p>
+        </div>
+        <form id="req" novalidate>
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="two">
+            <div class="field sel"><label for="f-city">City</label><select id="f-city" name="city"><option>Delhi</option><option>Bombay</option><option>Elsewhere</option></select></div>
+            <div class="field"><label for="f-social">Instagram or LinkedIn</label><input id="f-social" name="social"></div>
+          </div>
+          <div class="field"><label for="f-ref">Member vouching for you (optional)</label><input id="f-ref" name="ref"></div>
+          <button class="pill" type="submit">Request an invite</button>
+          <small>Requests are reviewed by members, in the order they arrive.</small>
+        </form>
+      </div>
+      <div class="done" id="done" hidden>
+        <svg class="sym" viewBox="0 0 100 100" aria-hidden="true"><path class="ring" d="M79.13 71.80A38 38 0 1 1 79.13 28.20"/><circle class="dot" cx="86" cy="50" r="4"/></svg>
+        <h3>You're at the door.</h3>
+        <p>Your request is with the members. If a circle says yes, you'll hear from us directly.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <a class="brand" href="#top" aria-label="THE CIRC home">
+        <svg class="sym" viewBox="0 0 100 100" aria-hidden="true"><path class="ring" d="M79.13 71.80A38 38 0 1 1 79.13 28.20" stroke-width="5.5"/><circle class="dot" cx="86" cy="50" r="5.6"/></svg>
+        <span>THE CIRC</span>
+      </a>
+      <p style="max-width:44em">THE CIRC app is software for private, invitation-based communities: member profiles and verification, circles and community moderation, event discovery, group chats, audio and video rooms, forums, notifications and curated recommendations.</p>
+    </div>
+    <div class="fine-print">
+      <span>Copyright &copy; 2026 THE CIRC. All rights reserved. &nbsp;&middot;&nbsp; Instagram @thecirc.irl</span>
+      <span>THE CIRC&trade; is a trademark of Aman Kulthia. Trade mark application no. 7515053, Class 9, pending.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('req').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=document.getElementById('f-name');
+  if(!n.value.trim()){n.focus();n.style.borderColor='var(--oxblood)';return;}
+  document.getElementById('ask').hidden=true;
+  var d=document.getElementById('done');d.hidden=false;d.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+
+</body>
+</html>
